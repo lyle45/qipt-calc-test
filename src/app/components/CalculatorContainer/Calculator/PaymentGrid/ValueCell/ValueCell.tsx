@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { Grid, styled, Typography } from '@mui/material';
 import { PaymentDueTime, pmt } from 'financial';
 import { grey } from '@mui/material/colors';
 
@@ -22,6 +22,18 @@ const getQC = (price: number) => {
   return 0.02;
 };
 
+const StyledValueCell = styled(Grid)({
+  backgroundColor: 'white',
+  outline: `${grey[300]} solid 1px`,
+  marginTop: '1px',
+  marginLeft: '1px',
+  height: 50,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 99,
+});
+
 const ValueCell = ({ rate, nper, price, rowIndex, cellIndex }: Props) => {
   const [payment, setPayment] = useState('-');
 
@@ -34,27 +46,24 @@ const ValueCell = ({ rate, nper, price, rowIndex, cellIndex }: Props) => {
   }, [price, rate, nper]);
 
   return (
-    <Grid
+    <StyledValueCell
       item
       xs
       sx={{
-        backgroundColor: 'white',
-        outline: `${grey[300]} solid 1px`,
-        marginTop: '1px',
-        marginLeft: '1px',
-        height: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 99,
         borderTopLeftRadius: rowIndex === 0 && cellIndex === 0 ? 8 : 0,
         borderTopRightRadius: rowIndex === 0 && cellIndex === 2 ? 8 : 0,
         borderBottomLeftRadius: rowIndex === 2 && cellIndex === 0 ? 8 : 0,
         borderBottomRightRadius: rowIndex === 2 && cellIndex === 2 ? 8 : 0,
       }}
+      title={payment}
     >
-      <Typography variant="body1">{payment}</Typography>
-    </Grid>
+      <Typography
+        variant="body1"
+        sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', maxWidth: 65 }}
+      >
+        {payment}
+      </Typography>
+    </StyledValueCell>
   );
 };
 

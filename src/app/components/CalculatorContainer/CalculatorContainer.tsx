@@ -31,6 +31,7 @@ const StyledStack = styled(Stack)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     padding: theme.spacing(4, 2),
   },
+  marginBottom: theme.spacing(3),
 }));
 
 export default function CalculatorContainer() {
@@ -54,6 +55,13 @@ export default function CalculatorContainer() {
           </Typography>
           <Calculator />
         </StyledStack>
+        <Typography variant={'caption'} sx={{ color: grey[700] }}>
+          This is indicative monthly pricing, subject to eligibility check and final approval by our
+          Financing Providers. Qipt is not a lender and does not make loans, loan commitments or
+          lock-rates. Estimated payment amount does not include taxes or shipping fees. Monthly
+          payment amounts and financing terms will vary based on the applicant&apos;s eligibility
+          and credit worthiness and are subject to change.
+        </Typography>
       </StyledBoxContainer>
     </>
   );
