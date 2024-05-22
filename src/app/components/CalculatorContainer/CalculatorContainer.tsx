@@ -16,9 +16,12 @@ const StyledBoxContainer = styled(Box)(({ theme }) => ({
 
 const StyledBoxDescription = styled(Box)(({ theme }) => ({
   display: 'flex',
-  justifyContent: 'space-between',
   alignItems: 'center',
   marginBottom: theme.spacing(2),
+  justifyContent: 'space-between',
+  [theme.breakpoints.down('md')]: {
+    justifyContent: 'center',
+  },
 }));
 
 const StyledStack = styled(Stack)(({ theme }) => ({
@@ -40,12 +43,28 @@ export default function CalculatorContainer() {
       <StyledBoxContainer>
         <StyledBoxDescription>
           <Stack>
-            <Typography variant={'h4'}>Monthly Payments Calculator</Typography>
-            <Typography variant={'body2'} sx={{ color: grey[700] }}>
+            <Typography
+              variant={'h6'}
+              sx={{
+                fontSize: { md: 32, xs: 24 },
+                fontWeight: 700,
+                textAlign: { md: 'start', xs: 'center' },
+              }}
+            >
+              Monthly Payments Calculator
+            </Typography>
+            <Typography
+              variant={'body2'}
+              sx={{ color: grey[700], textAlign: { md: 'start', xs: 'center' } }}
+            >
               Enter a price to see your estimated monthly payment.
             </Typography>
           </Stack>
-          <Button variant={'contained'} color={'primary'} sx={{ textTransform: 'none' }}>
+          <Button
+            variant={'contained'}
+            color={'primary'}
+            sx={{ display: { md: 'block', xs: 'none' }, textTransform: 'none' }}
+          >
             Get prequalified now
           </Button>
         </StyledBoxDescription>
