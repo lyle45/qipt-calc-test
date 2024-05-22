@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Button, styled, TextField } from '@mui/material';
 
 interface Props {
@@ -32,7 +32,16 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function PriceInput({ initialValue, onCalculate }: Props) {
-  const [price, setPrice] = useState<number>(initialValue || 0);
+  const [price, setPrice] = useState<number | string>(initialValue || '');
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === '') {
+      setPrice(value);
+    } else {
+      setPrice(+e.target.value);
+    }
+  };
 
   return (
     <StyledTextField
@@ -40,16 +49,16 @@ export default function PriceInput({ initialValue, onCalculate }: Props) {
       type={'number'}
       fullWidth
       placeholder={'Expected total price'}
-      onChange={(e) => setPrice(+e.target.value)}
+      onChange={handleChange}
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
-          onCalculate(price);
+          onCalculate(+price);
         }
       }}
       InputProps={{
         endAdornment: (
-          <StyledButton variant={'contained'} onClick={() => onCalculate(price)}>
+          <StyledButton variant={'contained'} onClick={() => onCalculate(+price)}>
             Calculate
           </StyledButton>
         ),
