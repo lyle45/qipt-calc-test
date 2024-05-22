@@ -4,16 +4,15 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  IconButton,
   Skeleton,
   styled,
   Typography,
 } from '@mui/material';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { CompanyMetadata, FAQ } from '@/app/models/company-metadata';
 import { useParams } from 'next/navigation';
 import { grey } from '@mui/material/colors';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const StyleBoxFaqContainer = styled(Box)(({ theme }) => ({
@@ -53,9 +52,9 @@ const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
 }));
 
 export default function FaqContainer() {
+  const { id } = useParams();
   const [faqData, setFaqData] = useState<FAQ[]>([]);
   const [loading, setLoading] = useState(true);
-  const { id } = useParams();
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange = (panel: string) => (event: SyntheticEvent, isExpanded: boolean) => {
@@ -69,7 +68,6 @@ export default function FaqContainer() {
         const metadata: CompanyMetadata = await import(
           `@/app/assets/companies-metadata/${id}.json`
         );
-        console.log(metadata);
         setFaqData(metadata.faq);
       } catch (e) {
         console.error(e);

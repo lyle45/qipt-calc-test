@@ -42,17 +42,18 @@ const ValueCell = ({ rate, nper, price, rowIndex, cellIndex, transitionDelay }: 
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (price) {
-      const pv = price * (1 + getQC(price));
-      const pmt = calculatePMT(rate, nper, pv).toFixed(2);
-      setPayment(pmt);
-    }
-
     const exitTransitionTimer = setTimeout(() => {
       setShow(false);
     }, transitionDelay);
 
     const enterTransitionTimer = setTimeout(() => {
+      if (price) {
+        const pv = price * (1 + getQC(price));
+        const pmt = calculatePMT(rate, nper, pv).toFixed(2);
+        setPayment(pmt);
+      } else {
+        setPayment('-');
+      }
       setShow(true);
     }, transitionDelay + 300);
 

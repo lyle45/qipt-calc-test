@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import CalculatorContainer from '@/app/components/CalculatorContainer/CalculatorContainer';
 import FaqContainer from '@/app/components/FaqContainer/FaqContainer';
 

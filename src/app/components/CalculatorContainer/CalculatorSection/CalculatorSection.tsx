@@ -1,5 +1,5 @@
 import { Stack, Typography, styled } from '@mui/material';
-import Calculator from '@/app/components/CalculatorContainer/Calculator/Calculator';
+import Calculator from '@/app/components/CalculatorContainer/CalculatorSection/Calculator/Calculator';
 
 const StyledStack = styled(Stack)(({ theme }) => ({
   justifyContent: 'center',
@@ -15,7 +15,7 @@ const StyledStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const CalculatorSection: React.FC = () => (
+const CalculatorSection = () => (
   <StyledStack>
     <Typography
       variant="h5"

@@ -1,9 +1,9 @@
 'use client';
 
-import { Box, Button, styled, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
-import PaymentGrid from '@/app/components/CalculatorContainer/Calculator/PaymentGrid/PaymentGrid';
-import PriceInput from '@/app/components/CalculatorContainer/Calculator/PriceInput/PriceInput';
+import PaymentGrid from '@/app/components/CalculatorContainer/CalculatorSection/Calculator/PaymentGrid/PaymentGrid';
+import PriceInput from '@/app/components/CalculatorContainer/CalculatorSection/Calculator/PriceInput/PriceInput';
 import { grey } from '@mui/material/colors';
 
 export default function Calculator() {
