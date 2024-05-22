@@ -8,9 +8,13 @@ interface Props {
 }
 
 export async function Header({ companyId }: Props) {
-  const metadata: CompanyMetadata = await import(
-    `@/app/assets/companies-metadata/${companyId}.json`
-  );
+  let metadata: CompanyMetadata;
+  try {
+    metadata = await import(`@/app/assets/companies-metadata/${companyId}.json`);
+  } catch (e) {
+    console.error(e);
+    metadata = { title: 'Qipt', logoUrl: 'logos/qipt-logo.svg', description: 'Qipt', faq: [] };
+  }
 
   return (
     <AppBar sx={{ boxShadow: '0px 4px 12px 0px rgba(0, 0, 0, 0.04)' }} position="static">
