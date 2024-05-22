@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { Button, styled, TextField } from '@mui/material';
 
 interface Props {
-  onCalculate: (price?: number) => void;
+  onCalculate: (price: number) => void;
+  initialValue?: number;
 }
 
 const StyledTextField = styled(TextField)({
@@ -30,11 +31,12 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function PriceInput({ onCalculate }: Props) {
-  const [price, setPrice] = useState<number>();
+export default function PriceInput({ initialValue, onCalculate }: Props) {
+  const [price, setPrice] = useState<number>(initialValue || 0);
 
   return (
     <StyledTextField
+      value={price}
       type={'number'}
       fullWidth
       placeholder={'Expected total price'}

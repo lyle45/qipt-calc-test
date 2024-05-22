@@ -5,13 +5,26 @@ import { useState } from 'react';
 import PaymentGrid from '@/app/components/CalculatorContainer/CalculatorSection/Calculator/PaymentGrid/PaymentGrid';
 import PriceInput from '@/app/components/CalculatorContainer/CalculatorSection/Calculator/PriceInput/PriceInput';
 import { grey } from '@mui/material/colors';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Calculator() {
-  const [confirmedPrice, setConfirmedPrice] = useState<number>();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [confirmedPrice, setConfirmedPrice] = useState<number>(+(searchParams.get('price') || 0));
+
+  const handleCalculate = (price: number) => {
+    // no easier way to do that https://github.com/vercel/next.js/discussions/47583#discussioncomment-7476451
+    const newParams = new URLSearchParams(searchParams);
+
+    setConfirmedPrice(price);
+    newParams.set('price', `${price}`);
+    router.replace(`?${newParams}`);
+  };
 
   return (
     <Box sx={{ width: '324px' }}>
-      <PriceInput onCalculate={setConfirmedPrice} />
+      <PriceInput initialValue={confirmedPrice} onCalculate={handleCalculate} />
       <Box sx={{ my: 3 }}>
         <PaymentGrid price={confirmedPrice} />
         <Box sx={{ mt: 4.5, color: grey[700] }}>

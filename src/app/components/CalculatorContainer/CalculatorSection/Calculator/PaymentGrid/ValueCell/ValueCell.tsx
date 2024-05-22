@@ -3,15 +3,15 @@ import { Grid, Slide, styled, Typography } from '@mui/material';
 import { PaymentDueTime, pmt } from 'financial';
 import { grey } from '@mui/material/colors';
 
-const calculatePMT = (rate: number, nper: number, pv: number): number => {
-  return pmt(rate, nper, pv, 0, PaymentDueTime.Begin);
-};
-
 const getQC = (price: number) => {
   if (price < 25000) return 0.06;
   if (price < 50000) return 0.04;
   if (price < 100000) return 0.03;
   return 0.02;
+};
+
+const calculatePMT = (rate: number, nper: number, pv: number): number => {
+  return pmt(rate, nper, pv, 0, PaymentDueTime.Begin);
 };
 
 const StyledValueCell = styled(Grid)({
@@ -27,19 +27,26 @@ const StyledValueCell = styled(Grid)({
   zIndex: 99,
 });
 
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  padding: theme.spacing(0, 0.5),
+}));
+
 interface Props {
   price?: number;
   rate: number;
   nper: number;
   rowIndex: number;
   cellIndex: number;
-  transitionDelay: number;
 }
 
-const ValueCell = ({ rate, nper, price, rowIndex, cellIndex, transitionDelay }: Props) => {
+const ValueCell = ({ rate, nper, price, rowIndex, cellIndex }: Props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [payment, setPayment] = useState('-');
   const [show, setShow] = useState(false);
+  const transitionDelay = rowIndex * 100 + cellIndex * 100;
 
   useEffect(() => {
     const exitTransitionTimer = setTimeout(() => {
@@ -83,12 +90,7 @@ const ValueCell = ({ rate, nper, price, rowIndex, cellIndex, transitionDelay }: 
         unmountOnExit
         container={containerRef.current}
       >
-        <Typography
-          variant="body1"
-          sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', maxWidth: 65 }}
-        >
-          {payment}
-        </Typography>
+        <StyledTypography variant="body1">{payment}</StyledTypography>
       </Slide>
     </StyledValueCell>
   );

@@ -72,7 +72,7 @@ export default function PaymentGrid({ price }: Props) {
         </Grid>
 
         {rows.map((row, rowIndex) => (
-          <Grid container sx={{ height: 50, flexWrap: 'nowrap' }} spacing={0} key={row.category}>
+          <Grid container sx={{ height: 50 }} spacing={0} key={row.category}>
             <StyledCategoryGrid
               item
               sx={{
@@ -89,7 +89,6 @@ export default function PaymentGrid({ price }: Props) {
                 price={price}
                 rowIndex={rowIndex}
                 cellIndex={cellIndex}
-                transitionDelay={rowIndex * 100 + cellIndex * 100}
               />
             ))}
           </Grid>
