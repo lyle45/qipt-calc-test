@@ -14,19 +14,23 @@ const StyledHeaderGrid = styled(Grid)(({ theme }) => ({
   borderTopRightRadius: '8px',
   fontSize: '14px',
   fontWeight: '600',
-  letterSpacing: '0.3px',
   marginBottom: `-${theme.spacing(1)}`,
 }));
 
-const StyledCategoryGrid = styled(StyledHeaderGrid)(({ theme }) => ({
+const StyledCategoryGrid = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: 'white',
   height: '50px',
   width: '122px',
+  fontSize: '14px',
+  fontWeight: '600',
+  padding: theme.spacing(1),
+  paddingRight: theme.spacing(2),
   borderTopLeftRadius: theme.spacing(0.5),
   borderBottomLeftRadius: theme.spacing(0.5),
-  borderTopRightRadius: 0,
   marginRight: `-${theme.spacing(1)}`,
-  paddingBottom: theme.spacing(1),
-  paddingRight: theme.spacing(2),
 }));
 
 interface Props {

@@ -39,6 +39,12 @@ export default function PriceInput({ onCalculate }: Props) {
       fullWidth
       placeholder={'Expected total price'}
       onChange={(e) => setPrice(+e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          onCalculate(price);
+        }
+      }}
       InputProps={{
         endAdornment: (
           <StyledButton variant={'contained'} onClick={() => onCalculate(price)}>
