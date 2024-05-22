@@ -1,5 +1,5 @@
 'use client';
-import { Box, Grid, Typography, Button, styled } from '@mui/material';
+import { Box, Grid, Typography, styled } from '@mui/material';
 import ValueCell from './ValueCell/ValueCell';
 
 const StyledHeaderGrid = styled(Grid)(({ theme }) => ({
