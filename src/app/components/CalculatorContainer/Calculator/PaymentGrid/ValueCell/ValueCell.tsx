@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, styled, Typography } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { Grid, Slide, styled, Typography } from '@mui/material';
 import { PaymentDueTime, pmt } from 'financial';
 import { grey } from '@mui/material/colors';
-
-interface Props {
-  price?: number;
-  rate: number;
-  nper: number;
-  rowIndex: number;
-  cellIndex: number;
-}
 
 const calculatePMT = (rate: number, nper: number, pv: number): number => {
   return pmt(rate, nper, pv, 0, PaymentDueTime.Begin);
@@ -31,22 +23,48 @@ const StyledValueCell = styled(Grid)({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  overflow: 'hidden',
   zIndex: 99,
 });
 
-const ValueCell = ({ rate, nper, price, rowIndex, cellIndex }: Props) => {
+interface Props {
+  price?: number;
+  rate: number;
+  nper: number;
+  rowIndex: number;
+  cellIndex: number;
+  transitionDelay: number;
+}
+
+const ValueCell = ({ rate, nper, price, rowIndex, cellIndex, transitionDelay }: Props) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [payment, setPayment] = useState('-');
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (price) {
       const pv = price * (1 + getQC(price));
       const pmt = calculatePMT(rate, nper, pv).toFixed(2);
-      setPayment(`${pmt}`);
+      setPayment(pmt);
     }
+
+    const exitTransitionTimer = setTimeout(() => {
+      setShow(false);
+    }, transitionDelay);
+
+    const enterTransitionTimer = setTimeout(() => {
+      setShow(true);
+    }, transitionDelay + 300);
+
+    return () => {
+      clearTimeout(enterTransitionTimer);
+      clearTimeout(exitTransitionTimer);
+    };
   }, [price, rate, nper]);
 
   return (
     <StyledValueCell
+      ref={containerRef}
       item
       xs
       sx={{
@@ -57,12 +75,20 @@ const ValueCell = ({ rate, nper, price, rowIndex, cellIndex }: Props) => {
       }}
       title={payment}
     >
-      <Typography
-        variant="body1"
-        sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', maxWidth: 65 }}
+      <Slide
+        direction={show ? 'right' : 'left'}
+        in={show}
+        mountOnEnter
+        unmountOnExit
+        container={containerRef.current}
       >
-        {payment}
-      </Typography>
+        <Typography
+          variant="body1"
+          sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', maxWidth: 65 }}
+        >
+          {payment}
+        </Typography>
+      </Slide>
     </StyledValueCell>
   );
 };

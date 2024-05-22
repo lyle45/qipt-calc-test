@@ -85,6 +85,7 @@ export default function PaymentGrid({ price }: Props) {
                 price={price}
                 rowIndex={rowIndex}
                 cellIndex={cellIndex}
+                transitionDelay={rowIndex * 100 + cellIndex * 100}
               />
             ))}
           </Grid>
